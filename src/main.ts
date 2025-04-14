@@ -23,5 +23,7 @@ async function bootstrap() {
   );
 
   await app.listen();
+
+  console.log('hola mundo');
 }
 bootstrap();
