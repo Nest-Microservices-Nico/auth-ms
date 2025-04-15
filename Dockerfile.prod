@@ -22,12 +22,15 @@ COPY --from=deps /usr/src/app/node_modules ./node_modules
 # Copiar todo el codigo fuente de la aplicación
 COPY . .
 
+ARG ORDERS_DATABASE_URL
+ENV DATABASE_URL=$ORDERS_DATABASE_URL
+
+RUN npx prisma generate
+
 # RUN npm run test
 RUN npm run build
 
 RUN npm ci -f --only=production && npm cache clean --force
-
-RUN npx prisma generate
 
 # Crear la imagen final de Docker
 FROM node:21-alpine3.19 as prod
